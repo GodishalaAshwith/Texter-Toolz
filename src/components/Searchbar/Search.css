@@ -1,0 +1,68 @@
+/* Wrapper for search bar */
+.search-bar {
+  background-color: rgba(1, 1, 1, 0);
+  width: 50%; /* Adjusted to use percentage for responsiveness */
+  margin-top: 4vh; /* Slightly reduced margin for responsiveness */
+  margin-left: auto; /* Center the search bar horizontally */
+  margin-right: auto;
+  height: 7vh; /* Responsive height */
+  border-radius: 5vh; /* Relative border radius */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Search input styling */
+.search-bar input {
+  border: 0;
+  border-radius: 5vh;
+  width: 100%; /* Takes up full width of the parent div */
+  height: 6vh; /* Slightly reduced height for better responsiveness */
+  text-align: center;
+  font-size: 2.2vh; /* Relative font size based on viewport height */
+}
+
+/* Placeholder styling */
+.search-bar input::placeholder {
+  text-align: center;
+  font-size: 2vh; /* Relative placeholder font size */
+}
+
+/* Focus state of the input */
+.search-bar input:focus {
+  outline: #00265a;
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+  .search-bar {
+    width: 90%; /* Increase width on smaller screens */
+    height: 6.5vh; /* Adjust height */
+  }
+
+  .search-bar input {
+    font-size: 2vh; /* Slightly reduce font size on smaller screens */
+    height: 5.5vh; /* Adjust input height */
+  }
+
+  .search-bar input::placeholder {
+    font-size: 1.8vh; /* Adjust placeholder font size */
+  }
+}
+
+/* Media Queries for very small screens (e.g., mobile) */
+@media (max-width: 480px) {
+  .search-bar {
+    width: 95%; /* Increase width for narrow screens */
+    height: 6vh; /* Further adjust height */
+  }
+
+  .search-bar input {
+    font-size: 1.8vh; /* Further reduce font size for mobile */
+    height: 5vh; /* Reduce input height */
+  }
+
+  .search-bar input::placeholder {
+    font-size: 1.6vh; /* Adjust placeholder font size for mobile */
+  }
+}

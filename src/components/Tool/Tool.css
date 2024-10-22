@@ -1,0 +1,27 @@
+.tool {
+  margin: 4vh;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  height: 25vh;
+  font-size: 2.75vh;
+  text-align: center;
+
+  /* Flexbox for vertical and horizontal centering */
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition effect */
+  opacity: 1;
+}
+
+.tool-hide {
+  opacity: 0; /* Hidden state with 0 opacity */
+  transform: scale(0.95); /* Slightly shrink the size when hidden */
+}
+
+.tool-show {
+  opacity: 1; /* Visible state with full opacity */
+  transform: scale(1); /* Full size */
+}
