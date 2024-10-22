@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import Home from "./pages/Home/Home";
+import Texter from "./pages/Texter/Texter";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             </div>
           }
         ></Route>
+        <Route path="/texter" element={<Texter />}></Route>
       </Route>
     </Routes>
   );
