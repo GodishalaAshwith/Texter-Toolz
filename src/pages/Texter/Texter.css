@@ -7,6 +7,7 @@ header {
 /* Wrapper for search bar */
 .input-field {
   background-color: rgba(1, 1, 1, 0);
+  color: #e3ff00;
   width: 50%; /* Adjusted to use percentage for responsiveness */
   margin-top: 4vh; /* Slightly reduced margin for responsiveness */
   margin-left: auto; /* Center the search bar horizontally */
@@ -16,12 +17,19 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+.input-field label {
+  font-size: 2.5vh;
 }
 
 /* Search textarea styling */
 .input-field textarea {
   border: 0;
-  border-radius: 5vh;
+  border-top-left-radius: 5vh; /* Rounded top-left corner */
+  border-bottom-left-radius: 5vh; /* Rounded bottom-left corner */
+  border-top-right-radius: 0; /* Unrounded top-right corner */
+  border-bottom-right-radius: 0; /* Unrounded bottom-right corner */
   width: 100%; /* Takes up full width of the parent div */
   height: 30vh; /* Increased height for large text input */
   text-align: left; /* Left-align for natural text flow in large fields */
@@ -41,34 +49,172 @@ header {
   outline: #00265a;
 }
 
+/* Responsive styling for settings section */
+.settings {
+  margin: 2vh;
+  height: auto; /* Dynamic height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+}
+
+.settings label {
+  margin-left: 2vh;
+  text-align: center;
+  font-size: 2.5vh;
+  color: #e3ff00;
+  margin-right: 1vh; /* Space between label and input */
+}
+
+.settings input {
+  border: none;
+  margin-left: 1vh;
+  width: 5vw; /* Responsive width */
+  height: 4vh;
+  text-align: center;
+  border-radius: 1vh; /* Rounded corners */
+}
+
+.settings input:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 0.5vh #e3ff00; /* Subtle glow effect on focus */
+}
+
+/* Output section styling */
+.output {
+  margin: 5vh;
+  font-size: 3vh;
+  height: 10vh;
+  text-align: center;
+  width: 80%; /* Responsive width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Navigation buttons styling */
+.navigation-buttons {
+  margin: 4vh;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap; /* Allows buttons to wrap on smaller screens */
+}
+
+.navigation-buttons button {
+  padding: 2vh;
+  width: 25%; /* Responsive button width */
+  max-width: 150px; /* Limit the maximum width */
+  border: none;
+  border-radius: 5vh;
+}
+
 /* Media Queries for smaller screens */
 @media (max-width: 768px) {
   .input-field {
-    width: 90%; /* Increase width on smaller screens */
+    width: 90%;
   }
 
   .input-field textarea {
-    font-size: 2vh; /* Slightly reduce font size on smaller screens */
-    height: 25vh; /* Adjust textarea height */
+    font-size: 2vh;
+    height: 25vh;
   }
 
   .input-field textarea::placeholder {
-    font-size: 1.8vh; /* Adjust placeholder font size */
+    font-size: 1.8vh;
+  }
+
+  .settings label {
+    font-size: 2vh; /* Adjust font size for smaller screens */
+  }
+
+  .output {
+    font-size: 2.5vh; /* Adjust font size for smaller screens */
+  }
+
+  .navigation-buttons button {
+    width: 40%; /* Wider buttons on smaller screens */
   }
 }
 
 /* Media Queries for very small screens (e.g., mobile) */
 @media (max-width: 480px) {
   .input-field {
-    width: 95%; /* Increase width for narrow screens */
+    width: 95%;
   }
 
   .input-field textarea {
-    font-size: 1.8vh; /* Further reduce font size for mobile */
-    height: 20vh; /* Reduce textarea height slightly */
+    font-size: 1.8vh;
+    height: 20vh;
   }
 
   .input-field textarea::placeholder {
-    font-size: 1.6vh; /* Adjust placeholder font size for mobile */
+    font-size: 1.6vh;
   }
+
+  .settings label {
+    font-size: 1.8vh;
+    margin-left: 5.7vh;
+  }
+
+  .settings input {
+    width: 15vw; /* Adjust width for mobile screens */
+  }
+
+  .output {
+    font-size: 2vh;
+    width: 90%;
+  }
+
+  .navigation-buttons button {
+    width: 45%;
+    padding: 1.5vh; /* Adjust padding for smaller buttons on mobile */
+  }
+}
+
+/* Custom scrollbar for the textarea */
+.input-field textarea {
+  border: 0;
+  border-top-left-radius: 5vh; /* Rounded top-left corner */
+  border-bottom-left-radius: 5vh; /* Rounded bottom-left corner */
+  border-top-right-radius: 0; /* Unrounded top-right corner */
+  border-bottom-right-radius: 0; /* Unrounded bottom-right corner */
+  width: 100%; /* Takes up full width of the parent div */
+  height: 30vh; /* Increased height for large text input */
+  text-align: left; /* Left-align for natural text flow in large fields */
+  font-size: 2.2vh; /* Relative font size based on viewport height */
+  padding: 1vh 2vh; /* Add some padding for comfort */
+  resize: vertical; /* Allow users to resize the textarea vertically */
+
+  /* Custom scrollbar styles */
+  overflow-y: scroll; /* Enable vertical scroll */
+}
+
+/* Scrollbar styles */
+.input-field textarea::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.input-field textarea::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* Background of the scrollbar track */
+  border-radius: 10px; /* Rounded corners for the track */
+}
+
+.input-field textarea::-webkit-scrollbar-thumb {
+  background: #e3ff00; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.input-field textarea::-webkit-scrollbar-thumb:hover {
+  background: #c3d600; /* Darker color on hover */
+}
+
+/* Fallback for Firefox */
+.input-field textarea {
+  scrollbar-width: thin; /* Firefox: Set scrollbar width to thin */
+  scrollbar-color: #e3ff00 rgba(0, 0, 0, 0.1); /* Thumb color and track color */
+}
+
+/* Set the scrollbar to be inside the textarea */
+.input-field textarea {
+  padding-right: 10px; /* Add padding to the right to prevent text overlap with scrollbar */
 }
