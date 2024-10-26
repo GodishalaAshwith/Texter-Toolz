@@ -208,12 +208,6 @@ header {
   background: #c3d600; /* Darker color on hover */
 }
 
-/* Fallback for Firefox */
-.input-field textarea {
-  scrollbar-width: thin; /* Firefox: Set scrollbar width to thin */
-  scrollbar-color: #e3ff00 rgba(0, 0, 0, 0.1); /* Thumb color and track color */
-}
-
 /* Set the scrollbar to be inside the textarea */
 .input-field textarea {
   padding-right: 10px; /* Add padding to the right to prevent text overlap with scrollbar */

@@ -9,18 +9,22 @@ interface IState {
   autoNextSpeed: number;
 }
 
+type DisplayMode = "wordToWord" | "newLineSeparated";
+
 const Texter = () => {
   const [state, setState] = useState<IState>({
     text: "",
     lines: [],
     currentLineIndex: 0,
-    wordsPerLine: 5, // Default value
-    autoNextSpeed: 5000, // Default speed in milliseconds
+    wordsPerLine: 5,
+    autoNextSpeed: 15000,
   });
   const [isAutoNext, setIsAutoNext] = useState(false);
+  const [displayMode, setDisplayMode] = useState<DisplayMode>("wordToWord");
+  const [popOutWindow, setPopOutWindow] = useState<Window | null>(null);
 
   useEffect(() => {
-    let interval: ReturnType<typeof setInterval> | null = null; // Updated type for interval
+    let interval: ReturnType<typeof setInterval> | null = null;
     if (isAutoNext) {
       interval = setInterval(() => {
         setState((prevState) => ({
@@ -36,6 +40,19 @@ const Texter = () => {
       if (interval) clearInterval(interval);
     };
   }, [isAutoNext, state.autoNextSpeed, state.lines.length]);
+
+  useEffect(() => {
+    // Update content in pop-out window when currentLineIndex changes
+    if (popOutWindow) {
+      popOutWindow.document.body.innerHTML =
+        state.lines[state.currentLineIndex] || "No text available";
+    }
+  }, [state.currentLineIndex, popOutWindow, state.lines]);
+
+  useEffect(() => {
+    // Re-split text each time displayMode changes
+    splitTextIntoLines(state.text, state.wordsPerLine);
+  }, [displayMode]);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
@@ -58,7 +75,7 @@ const Texter = () => {
   const handleAutoNextSpeedChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
-    const newSpeed = Math.max(parseInt(event.target.value) || 1000, 100); // Ensure minimum speed is 100
+    const newSpeed = Math.max(parseInt(event.target.value) || 1000, 100);
     setState((prevState) => ({
       ...prevState,
       autoNextSpeed: newSpeed,
@@ -70,9 +87,9 @@ const Texter = () => {
   ): void => {
     event.preventDefault();
     const newSpeed = Math.max(
-      state.autoNextSpeed + (event.deltaY < 0 ? 100 : -100),
+      state.autoNextSpeed + (event.deltaY < 0 ? 1000 : -1000),
       100
-    ); // Ensure a minimum speed of 100
+    );
     setState((prevState) => ({
       ...prevState,
       autoNextSpeed: newSpeed,
@@ -86,7 +103,7 @@ const Texter = () => {
     const newWordsPerLine = Math.max(
       state.wordsPerLine + (event.deltaY < 0 ? 1 : -1),
       1
-    ); // Minimum of 1 word per line
+    );
     setState((prevState) => ({
       ...prevState,
       wordsPerLine: newWordsPerLine,
@@ -95,11 +112,17 @@ const Texter = () => {
   };
 
   const splitTextIntoLines = (text: string, wordsPerLine: number) => {
-    const words = text.split(/\s+/);
-    const newLines: string[] = []; // Explicitly typed as string array
-    for (let i = 0; i < words.length; i += wordsPerLine) {
-      newLines.push(words.slice(i, i + wordsPerLine).join(" "));
+    let newLines: string[];
+    if (displayMode === "wordToWord") {
+      const words = text.split(/\s+/);
+      newLines = [];
+      for (let i = 0; i < words.length; i += wordsPerLine) {
+        newLines.push(words.slice(i, i + wordsPerLine).join(" "));
+      }
+    } else {
+      newLines = text.split("\n");
     }
+
     setState((prevState) => ({
       ...prevState,
       text,
@@ -127,6 +150,25 @@ const Texter = () => {
 
   const toggleAutoNext = (): void => {
     setIsAutoNext((prevState) => !prevState);
+  };
+
+  const toggleDisplayMode = () => {
+    setDisplayMode((prevMode) =>
+      prevMode === "wordToWord" ? "newLineSeparated" : "wordToWord"
+    );
+  };
+
+  const openPopOut = () => {
+    if (!popOutWindow || popOutWindow.closed) {
+      const newWindow = window.open("", "_blank", "width=800,height=100");
+      if (newWindow) {
+        newWindow.document.body.innerHTML =
+          state.lines[state.currentLineIndex] || "No text available";
+        setPopOutWindow(newWindow);
+      }
+    } else {
+      popOutWindow.focus();
+    }
   };
 
   return (
@@ -181,16 +223,22 @@ const Texter = () => {
             onClick={handlePrevious}
             disabled={state.currentLineIndex === 0}
           >
-            Previous
+            <i className="bi bi-arrow-left"></i>
+          </button>
+          <button onClick={toggleDisplayMode}>
+            {displayMode === "wordToWord" ? "Switch to Line" : "Switch to Word"}
           </button>
           <button onClick={toggleAutoNext}>
             {isAutoNext ? "Stop Auto Next" : "Auto Next"}
+          </button>
+          <button onClick={openPopOut}>
+            <i className="bi bi-box-arrow-up-right"></i>
           </button>
           <button
             onClick={handleNext}
             disabled={state.currentLineIndex === state.lines.length - 1}
           >
-            Next
+            <i className="bi bi-arrow-right"></i>
           </button>
         </div>
       </main>
