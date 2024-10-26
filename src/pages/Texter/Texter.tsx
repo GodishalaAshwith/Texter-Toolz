@@ -17,7 +17,7 @@ const Texter = () => {
     lines: [],
     currentLineIndex: 0,
     wordsPerLine: 5,
-    autoNextSpeed: 15000,
+    autoNextSpeed: 25000,
   });
   const [isAutoNext, setIsAutoNext] = useState(false);
   const [displayMode, setDisplayMode] = useState<DisplayMode>("wordToWord");
@@ -158,16 +158,24 @@ const Texter = () => {
     );
   };
 
-  const openPopOut = () => {
-    if (!popOutWindow || popOutWindow.closed) {
-      const newWindow = window.open("", "_blank", "width=800,height=100");
+  const handlePopOut = (): void => {
+    if (popOutWindow && !popOutWindow.closed) {
+      popOutWindow.close();
+      setPopOutWindow(null);
+    } else {
+      const newWindow = window.open(
+        "",
+        "TexterOutput",
+        "width=750,height=100,top=100,left=100"
+      );
       if (newWindow) {
-        newWindow.document.body.innerHTML =
+        newWindow.document.title = "Texter Output";
+        newWindow.document.body.style.fontSize = "1.5em";
+        newWindow.document.body.style.padding = "20px";
+        newWindow.document.body.innerText =
           state.lines[state.currentLineIndex] || "No text available";
         setPopOutWindow(newWindow);
       }
-    } else {
-      popOutWindow.focus();
     }
   };
 
@@ -237,7 +245,7 @@ const Texter = () => {
           <button type="button" aria-label="Next Line" onClick={toggleAutoNext}>
             {isAutoNext ? "Stop Auto Next" : "Auto Next"}
           </button>
-          <button type="button" aria-label="Next Line" onClick={openPopOut}>
+          <button type="button" aria-label="Next Line" onClick={handlePopOut}>
             <i className="bi bi-box-arrow-up-right"></i>
           </button>
           <button
