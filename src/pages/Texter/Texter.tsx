@@ -220,21 +220,29 @@ const Texter = () => {
 
         <div className="navigation-buttons">
           <button
+            type="button"
+            aria-label="Next Line"
             onClick={handlePrevious}
             disabled={state.currentLineIndex === 0}
           >
             <i className="bi bi-arrow-left"></i>
           </button>
-          <button onClick={toggleDisplayMode}>
+          <button
+            type="button"
+            aria-label="Next Line"
+            onClick={toggleDisplayMode}
+          >
             {displayMode === "wordToWord" ? "Switch to Line" : "Switch to Word"}
           </button>
-          <button onClick={toggleAutoNext}>
+          <button type="button" aria-label="Next Line" onClick={toggleAutoNext}>
             {isAutoNext ? "Stop Auto Next" : "Auto Next"}
           </button>
-          <button onClick={openPopOut}>
+          <button type="button" aria-label="Next Line" onClick={openPopOut}>
             <i className="bi bi-box-arrow-up-right"></i>
           </button>
           <button
+            type="button"
+            aria-label="Next Line"
             onClick={handleNext}
             disabled={state.currentLineIndex === state.lines.length - 1}
           >
